@@ -68,11 +68,11 @@ const images = [
 
 const gallery = document.querySelector('.gallery');
 
-function addImageToGallary({ preview, original, description }) {
+function addImageToGallery({ preview, original, description }) {
     
     const addImage = `
 <li class="gallery-item">
-  <a class="gallery-link" href="#${original}">
+  <a class="gallery-link" href="${original}">
     <img
       class="gallery-image"
       src="${preview}"
@@ -81,16 +81,29 @@ function addImageToGallary({ preview, original, description }) {
     />
   </a>
 </li>`
+    
     return gallery.insertAdjacentHTML('beforeend', addImage);
 }
+images.forEach(addImageToGallery);
 
-images.forEach(addImageToGallary);
+gallery.addEventListener('click', event => {
+    event.preventDefault();
 
+    const src = event.target.getAttribute('data-source');
+    if (!src) return;
 
-const galleryPrint = document.querySelector('ul.gallery');
+    console.log(src);
 
-
-galleryPrint.addEventListener('click', (event) => {
-    console.log(event.target.getAttribute('data-source'));
+    const instance = basicLightbox.create(`<img src="${src}">`);
+    instance.show();
 });
+
+
+
+// const galleryPrint = document.querySelector('ul.gallery');
+
+// galleryPrint.addEventListener('click', (event) => {
+//     console.log(event.target.getAttribute('data-source'));
+// });
+
 
